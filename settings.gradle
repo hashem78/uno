@@ -1,0 +1,4 @@
+rootProject.name = 'uno'
+include 'engine'
+include 'game'
+
