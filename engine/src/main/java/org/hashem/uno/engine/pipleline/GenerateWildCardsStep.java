@@ -3,7 +3,6 @@ package org.hashem.uno.engine.pipleline;
 import org.hashem.uno.engine.action.WildAction;
 import org.hashem.uno.engine.action.WildDrawFourAction;
 import org.hashem.uno.engine.card.Card;
-import org.hashem.uno.engine.card.ColorlessActionCard;
 
 import java.util.List;
 
@@ -13,9 +12,9 @@ public record GenerateWildCardsStep() implements Step<List<Card>, List<Card>> {
     public List<Card> execute(List<Card> input) {
 
         for (int i = 0; i < 4; i++)
-            input.add(new ColorlessActionCard(new WildAction()));
+            input.add(new Card(new WildAction(), null, null));
         for (int i = 0; i < 4; i++)
-            input.add(new ColorlessActionCard(new WildDrawFourAction()));
+            input.add(new Card(new WildDrawFourAction(), null, null));
 
         return input;
     }

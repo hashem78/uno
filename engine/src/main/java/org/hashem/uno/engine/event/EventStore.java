@@ -34,8 +34,13 @@ public record EventStore(
         if (!handlers.containsKey(event.getClass())) return;
         previousEvents.add(event);
         @SuppressWarnings("unchecked") var val = (EventHandler<T>) handlers.get(event.getClass());
-        var state = val.handle(Iterables.getLast(previousStates), event);
-        setState(state);
+        try {
+            var state = val.handle(Iterables.getLast(previousStates), event);
+            setState(state);
+        } catch (Exception e) {
+            System.out.println(e);
+            addEvent(new EndGameEvent());
+        }
     }
 
     public void setState(State state) {

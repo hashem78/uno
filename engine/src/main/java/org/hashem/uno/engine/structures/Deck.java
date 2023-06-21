@@ -33,4 +33,10 @@ public record Deck(List<Card> cards) implements DeckBuilder.With {
     public boolean contains(Card card) {
         return cards.contains(card);
     }
+
+    public Deck add(List<Card> cards) {
+        var cardsCopy = new ArrayList<>(this.cards);
+        cardsCopy.addAll(cards);
+        return this.withCards(cardsCopy);
+    }
 }

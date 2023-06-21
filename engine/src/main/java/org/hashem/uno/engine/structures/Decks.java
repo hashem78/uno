@@ -17,10 +17,10 @@ public record Decks(List<Deck> decks) implements DecksBuilder.With {
         return decks.indexOf(deck);
     }
 
-    public Decks remove(int index) {
+    public Pair<Decks, Deck> remove(int index) {
         List<Deck> updated = new ArrayList<>(decks);
-        updated.remove(index);
-        return this.withDecks(updated);
+        var removed = updated.remove(index);
+        return new Pair<>(this.withDecks(updated), removed);
     }
 
     public Deck get(int index) {

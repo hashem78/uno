@@ -1,5 +1,8 @@
 package org.hashem.uno.game;
 
+import org.hashem.uno.engine.action.DefaultActionVisitor;
+import org.hashem.uno.engine.card.Card;
+import org.hashem.uno.engine.event.ActionCardChosenEvent;
 import org.hashem.uno.engine.render.ConsoleGameRenderer;
 import org.hashem.uno.engine.render.Renderer;
 import org.hashem.uno.engine.event.ActionlessCardChosenEvent;
@@ -12,6 +15,18 @@ import org.hashem.uno.engine.structures.Deck;
 
 import java.util.*;
 
+interface Rule {
+    boolean apply(Card a, Card b);
+}
+
+class CardsCompatibleRule implements Rule {
+
+    @Override
+    public boolean apply(Card a, Card b) {
+
+        return true;
+    }
+}
 
 public class Main {
     public static void main(String[] args) {
@@ -41,21 +56,20 @@ public class Main {
 
         eventStore.registerHandler(
                 ActionlessCardChosenEvent.class,
-                (state, event) -> {
-
-                    return state
-                            .withDecks(state.decks().remove(event.card()))
-                            .withNextPlayer();
-                }
+                (state, event) -> state
+                        .withDecks(state.decks().remove(event.card()))
+                        .withNextPlayer()
         );
 
         eventStore.registerHandler(
-                ActionlessCardChosenEvent.class,
+                ActionCardChosenEvent.class,
                 (state, event) -> {
+                    var stateAfterAction = event.card()
+                            .action()
+                            .accept(new DefaultActionVisitor(state));
 
-                    return state
-                            .withDecks(state.decks().remove(event.card()))
-                            .withNextPlayer();
+                    return stateAfterAction
+                            .withDecks(stateAfterAction.decks().remove(event.card()));
                 }
         );
 
@@ -74,15 +88,10 @@ public class Main {
                     .get(currentState.currentPlayer())
                     .get(cardIndex);
 
-            eventStore.addEvent(new ActionlessCardChosenEvent(currentState.decks().get(currentState.currentPlayer()).get(cardIndex)));
+            if (chosenCard.action() == null)
+                eventStore.addEvent(new ActionlessCardChosenEvent(chosenCard));
+            else
+                eventStore.addEvent(new ActionCardChosenEvent(chosenCard));
         }
     }
-}
-
-interface Dog {
-    void bark();
-}
-
-interface Jafar extends Dog {
-    void eat();
 }

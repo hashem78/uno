@@ -5,7 +5,6 @@ import org.hashem.uno.engine.action.DrawTwoAction;
 import org.hashem.uno.engine.action.ReverseAction;
 import org.hashem.uno.engine.action.SkipAction;
 import org.hashem.uno.engine.card.Card;
-import org.hashem.uno.engine.card.ColoredActionCard;
 
 import java.util.List;
 
@@ -15,9 +14,9 @@ public record GenerateValuedColorCardsStep(Color color) implements Step<List<Car
     public List<Card> execute(List<Card> input) {
 
         for (int i = 0; i < 2; i++) {
-            input.add(new ColoredActionCard(color, new ReverseAction()));
-            input.add(new ColoredActionCard(color, new SkipAction()));
-            input.add(new ColoredActionCard(color, new DrawTwoAction()));
+            input.add(new Card(new ReverseAction(), color, null));
+            input.add(new Card(new SkipAction(), color, null));
+            input.add(new Card(new DrawTwoAction(), color, null));
         }
         return input;
     }

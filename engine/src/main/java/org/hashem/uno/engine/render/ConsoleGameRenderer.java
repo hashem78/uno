@@ -11,7 +11,7 @@ public class ConsoleGameRenderer implements Renderer {
         int counter = 0;
 
         for (var card : deck.cards()) {
-            System.out.println(counter + ") " + card.representation());
+            System.out.println(counter + ") " + card);
             counter++;
         }
     }
