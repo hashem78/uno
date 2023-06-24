@@ -38,8 +38,10 @@ public record RuleSet(
 
         for (var rule : rules) {
             result = strategy.apply(result, rule);
-            System.out.println("Applied Rule: " + rule + ", result is: " + result);
         }
+
+        if(result)
+            System.out.println("Move Passed RuleSet: " + name);
 
         return result;
     }

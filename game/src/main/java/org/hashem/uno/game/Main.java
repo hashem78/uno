@@ -1,262 +1,19 @@
 package org.hashem.uno.game;
 
-import com.google.common.collect.Iterables;
-import org.hashem.uno.engine.Color;
 import org.hashem.uno.engine.action.DefaultActionVisitor;
-import org.hashem.uno.engine.action.NoEffectAction;
-import org.hashem.uno.engine.card.Card;
 import org.hashem.uno.engine.event.CardChosenEvent;
-import org.hashem.uno.engine.render.ConsoleGameRenderer;
-import org.hashem.uno.engine.render.Renderer;
+import org.hashem.uno.engine.event.DrawFromBankPileEvent;
 import org.hashem.uno.engine.event.EndGameEvent;
 import org.hashem.uno.engine.event.EventStore;
 import org.hashem.uno.engine.pipleline.*;
-import org.hashem.uno.engine.pipleline.PickPlayerCountStep;
-import org.hashem.uno.engine.rule.RuleSet;
-import org.hashem.uno.engine.rule.StateDependantRule;
-import org.hashem.uno.engine.rule.StateInDependantRule;
+import org.hashem.uno.engine.render.ConsoleGameRenderer;
+import org.hashem.uno.engine.render.Renderer;
+import org.hashem.uno.engine.rule.*;
 import org.hashem.uno.engine.state.State;
 import org.hashem.uno.engine.structures.Deck;
-import org.hashem.uno.engine.structures.Pile;
-import org.hashem.uno.engine.value.EmptyCardValue;
 
-import java.util.*;
-import java.util.stream.Stream;
+import java.util.Scanner;
 
-final class SameColorRule extends StateDependantRule {
-
-    public SameColorRule(State state, Card card) {
-        super(state, card);
-    }
-
-    @Override
-    public boolean apply() {
-
-        return Iterables.getLast(state.playPile().cards()).color().equals(card.color());
-    }
-
-    @Override
-    public String toString() {
-        return "SameColorRule";
-    }
-}
-
-final class DifferentColorRule extends StateDependantRule {
-    public DifferentColorRule(State state, Card card) {
-        super(state, card);
-    }
-
-    @Override
-    public boolean apply() {
-        return Iterables.getLast(state.playPile().cards()).color() != card.color();
-    }
-
-    @Override
-    public String toString() {
-        return "DifferentColorRule";
-    }
-}
-
-final class SameValueRule extends StateDependantRule {
-
-    public SameValueRule(State state, Card card) {
-        super(state, card);
-    }
-
-    @Override
-    public boolean apply() {
-        return Iterables.getLast(state.playPile().cards()).value().equals(card.value());
-    }
-
-    @Override
-    public String toString() {
-        return "SameValueRule";
-    }
-}
-
-final class DifferentValueRule extends StateDependantRule {
-
-    public DifferentValueRule(State state, Card card) {
-        super(state, card);
-    }
-
-    @Override
-    public boolean apply() {
-        return Iterables.getLast(state.playPile().cards()).value() != card.value();
-    }
-
-    @Override
-    public String toString() {
-        return "DifferentValueRule";
-    }
-}
-
-final class NoEffectActionRule extends StateInDependantRule {
-
-    public NoEffectActionRule(Card card) {
-        super(card);
-    }
-
-    @Override
-    public boolean apply() {
-        return card.action() instanceof NoEffectAction;
-    }
-}
-
-final class NoColorRule extends StateInDependantRule {
-
-    public NoColorRule(Card card) {
-        super(card);
-    }
-
-    @Override
-    public boolean apply() {
-        return card.color().equals(Color.NoColor);
-    }
-
-    @Override
-    public String toString() {
-        return "NoEffectActionRule";
-    }
-}
-
-final class WildCardRule extends StateInDependantRule {
-
-    public WildCardRule(Card card) {
-        super(card);
-    }
-
-    @Override
-    public boolean apply() {
-        return new RuleSet()
-                .add(new NoColorRule(card))
-                .add(new HasNoValueRule(card))
-                .apply();
-    }
-}
-
-final class NotWildCardRule extends StateInDependantRule {
-
-    public NotWildCardRule(Card card) {
-        super(card);
-    }
-
-    @Override
-    public boolean apply() {
-        return !(new WildCardRule(card).apply());
-    }
-
-    @Override
-    public String toString() {
-        return "NotWildCardRule";
-    }
-}
-
-final class HasActionRule extends StateInDependantRule {
-
-    public HasActionRule(Card card) {
-        super(card);
-    }
-
-    @Override
-    public boolean apply() {
-        return !(card.action() instanceof NoEffectAction);
-    }
-
-    @Override
-    public String toString() {
-        return "HasActionRule";
-    }
-}
-
-
-final class HasNoActionRule extends StateInDependantRule {
-
-    public HasNoActionRule(Card card) {
-        super(card);
-    }
-
-    @Override
-    public boolean apply() {
-        return !(new HasActionRule(card).apply());
-    }
-
-    @Override
-    public String toString() {
-        return "HasNoActionRule";
-    }
-}
-
-final class HasValueRule extends StateInDependantRule {
-
-    public HasValueRule(Card card) {
-        super(card);
-    }
-
-    @Override
-    public boolean apply() {
-        return !(card.value() instanceof EmptyCardValue);
-    }
-
-    @Override
-    public String toString() {
-        return "HasValueRule";
-    }
-}
-
-
-final class HasNoValueRule extends StateInDependantRule {
-
-    public HasNoValueRule(Card card) {
-        super(card);
-    }
-
-    @Override
-    public boolean apply() {
-        return !(new HasValueRule(card).apply());
-    }
-
-    @Override
-    public String toString() {
-        return "HasNoValueRule";
-    }
-}
-
-
-final class SameActionRule extends StateDependantRule {
-
-    public SameActionRule(State state, Card card) {
-        super(state, card);
-    }
-
-    @Override
-    public boolean apply() {
-
-        return Iterables.getLast(state.playPile().cards()).action().equals(card.action());
-    }
-
-    @Override
-    public String toString() {
-        return "SameActionRule";
-    }
-}
-
-final class DifferentActionRule extends StateDependantRule {
-
-    public DifferentActionRule(State state, Card card) {
-        super(state, card);
-    }
-
-    @Override
-    public boolean apply() {
-        return !(new SameActionRule(state, card).apply());
-    }
-
-    @Override
-    public String toString() {
-        return "DifferentActionRule";
-    }
-}
 
 public class Main {
     public static void main(String[] args) {
@@ -351,6 +108,32 @@ public class Main {
                 }
         );
 
+        eventStore.registerHandler(
+                DrawFromBankPileEvent.class,
+                (state, event) -> {
+                    try {
+                        var random = state.bankPile().getRandom(1);
+
+                        var modifiedBankPile = random.first();
+                        var randomCards = random.second();
+
+                        var temp = state.decks().remove(state.nextPlayer());
+                        var modifiedDecks = temp.first();
+                        var nextPlayerDeck = temp.second();
+                        var modifiedNextPlayerDeck = nextPlayerDeck.add(randomCards);
+                        modifiedDecks = modifiedDecks.add(state.nextPlayer(), modifiedNextPlayerDeck);
+
+                        return state
+                                .withBankPile(modifiedBankPile)
+                                .withDecks(modifiedDecks)
+                                .withNextPlayer();
+                    } catch (Exception e) {
+                        System.out.println(e.toString());
+                        eventStore.addEvent(new EndGameEvent());
+                        return state;
+                    }
+                }
+        );
         eventStore.setState(initialState);
 
         var scanner = new Scanner(System.in);
@@ -360,8 +143,15 @@ public class Main {
                 eventStore.addEvent(new EndGameEvent());
                 break;
             }
+            System.out.println("To draw a random card from the bank pile enter -1");
 
             var cardIndex = scanner.nextInt();
+
+            if (cardIndex == -1) {
+                eventStore.addEvent(new DrawFromBankPileEvent());
+                continue;
+            }
+
             var chosenCard = currentState.decks()
                     .get(currentState.currentPlayer())
                     .get(cardIndex);

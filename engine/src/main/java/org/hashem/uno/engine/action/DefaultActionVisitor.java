@@ -64,12 +64,9 @@ public class DefaultActionVisitor implements ActionStateVisitor {
         var modifiedNextPlayerDeck = nextPlayerDeck.add(randomCards);
         modifiedDecks = modifiedDecks.add(state.nextPlayer(), modifiedNextPlayerDeck);
 
-        var newState = state
+        return state
                 .withBankPile(modifiedBankPile)
-                .withDecks(modifiedDecks)
-                .withNextPlayer();
-
-        return newState;
+                .withDecks(modifiedDecks);
     }
 
     @Override
