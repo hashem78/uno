@@ -2,7 +2,7 @@ package org.hashem.uno.engine.action;
 
 import org.hashem.uno.engine.state.State;
 
-public class DefaultActionVisitor implements ActionVisitor {
+public class DefaultActionVisitor implements ActionStateVisitor {
 
     final State state;
 
@@ -64,11 +64,16 @@ public class DefaultActionVisitor implements ActionVisitor {
         var modifiedNextPlayerDeck = nextPlayerDeck.add(randomCards);
         modifiedDecks = modifiedDecks.add(state.nextPlayer(), modifiedNextPlayerDeck);
 
-        var newState =  state
+        var newState = state
                 .withBankPile(modifiedBankPile)
                 .withDecks(modifiedDecks)
                 .withNextPlayer();
 
         return newState;
+    }
+
+    @Override
+    public State visit(NoEffectAction action) {
+        return state.withNextPlayer();
     }
 }

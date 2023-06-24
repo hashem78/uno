@@ -9,7 +9,7 @@ final public class DrawTwoAction implements Action {
     }
 
     @Override
-    public State accept(ActionVisitor visitor) throws Exception {
+    public State accept(ActionStateVisitor visitor) throws Exception {
         return visitor.visit(this);
     }
 }

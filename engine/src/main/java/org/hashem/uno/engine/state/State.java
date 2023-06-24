@@ -1,9 +1,12 @@
 package org.hashem.uno.engine.state;
 
 import io.soabase.recordbuilder.core.RecordBuilder;
+import org.hashem.uno.engine.card.Card;
 import org.hashem.uno.engine.structures.Deck;
 import org.hashem.uno.engine.structures.Decks;
 import org.hashem.uno.engine.structures.Pile;
+
+import java.util.ArrayList;
 
 @RecordBuilder
 public record State(
@@ -33,5 +36,13 @@ public record State(
 
     public Deck getDeck(int index) {
         return decks.get(index);
+    }
+
+    public Card topOfPlayPile() {
+        return playPile.last();
+    }
+
+    public State withPlayPile(Card card) {
+        return this.withPlayPile(playPile.withCard(card));
     }
 }

@@ -2,7 +2,7 @@ package org.hashem.uno.engine.action;
 
 import org.hashem.uno.engine.state.State;
 
-public interface ActionVisitor {
+public interface ActionStateVisitor {
     State visit(DrawTwoAction action) throws Exception;
 
     State visit(ReverseAction action);
@@ -12,4 +12,6 @@ public interface ActionVisitor {
     State visit(WildAction action);
 
     State visit(WildDrawFourAction action) throws Exception;
+
+    State visit(NoEffectAction action);
 }

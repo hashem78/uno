@@ -8,7 +8,7 @@ final public class SkipAction implements Action {
         return "Skip";
     }
     @Override
-    public State accept(ActionVisitor visitor) {
+    public State accept(ActionStateVisitor visitor) {
         return visitor.visit(this);
     }
 }

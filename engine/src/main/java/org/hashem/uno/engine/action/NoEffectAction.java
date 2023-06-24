@@ -2,11 +2,10 @@ package org.hashem.uno.engine.action;
 
 import org.hashem.uno.engine.state.State;
 
-final public class ReverseAction implements Action {
-
+public class NoEffectAction implements Action {
     @Override
     public String representation() {
-        return "Reverse";
+        return "";
     }
     @Override
     public State accept(ActionStateVisitor visitor) {

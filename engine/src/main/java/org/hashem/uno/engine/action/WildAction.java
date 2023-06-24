@@ -9,7 +9,7 @@ final public class WildAction implements Action {
         return "Wild";
     }
     @Override
-    public State accept(ActionVisitor visitor) {
+    public State accept(ActionStateVisitor visitor) {
         return visitor.visit(this);
     }
 }
