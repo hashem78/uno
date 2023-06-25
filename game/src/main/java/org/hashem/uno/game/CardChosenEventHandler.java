@@ -35,7 +35,8 @@ final class CardChosenEventHandler implements EventHandler<CardChosenEvent> {
                         .add(new WildCardRule(state.topOfPlayPile())))
                 .add(new RuleSet()
                         .add(new HasActionRule(event.card()))
-                        .add(new HasValueRule(state.topOfPlayPile())))
+                        .add(new HasValueRule(state.topOfPlayPile()))
+                        .add(new SameColorRule(state, event.card())))
                 .add(new RuleSet()
                         .add(new HasActionRule(event.card()))
                         .add(new WildCardRule(state.topOfPlayPile())))
@@ -58,7 +59,7 @@ final class CardChosenEventHandler implements EventHandler<CardChosenEvent> {
                         .add(new WildCardRule(event.card())));
 
         if (!ruleSet.apply()) {
-            System.out.println("Failed to apply rule");
+            System.out.println("You can't place this card now, pick another or draw form the bank");
             return state;
         }
 

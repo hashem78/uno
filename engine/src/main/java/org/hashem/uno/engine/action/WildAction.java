@@ -12,5 +12,10 @@ final public class WildAction implements Action {
     public State accept(ActionStateVisitor visitor) {
         return visitor.visit(this);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof WildAction;
+    }
 }
 

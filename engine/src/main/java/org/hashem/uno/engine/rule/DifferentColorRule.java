@@ -12,7 +12,7 @@ public final class DifferentColorRule extends StateDependantRule {
 
     @Override
     public boolean apply() {
-        return Iterables.getLast(state.playPile().cards()).color() != card.color();
+        return !state.topOfPlayPile().color().equals(card.color());
     }
 
     @Override

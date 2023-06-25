@@ -12,4 +12,9 @@ final public class WildDrawFourAction implements Action {
     public State accept(ActionStateVisitor visitor) throws Exception {
         return visitor.visit(this);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof WildDrawFourAction;
+    }
 }

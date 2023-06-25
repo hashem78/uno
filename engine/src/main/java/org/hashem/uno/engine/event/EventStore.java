@@ -21,12 +21,14 @@ public record EventStore(
         previousStates.add(new State());
     }
 
-    public <T extends Event> void registerHandler(Class<T> eventType, EventHandler<T> listener) {
+    public <T extends Event> EventStore registerHandler(Class<T> eventType, EventHandler<T> listener) {
         handlers.put(eventType, listener);
+        return this;
     }
 
-    public <T extends State> void registerListener(StateListener<T> listener) {
+    public <T extends State> EventStore registerListener(StateListener<T> listener) {
         listeners.add(listener);
+        return this;
     }
 
     public <T extends Event> void addEvent(T event) {
@@ -43,11 +45,12 @@ public record EventStore(
         }
     }
 
-    public void setState(State state) {
-        if (state == Iterables.getLast(previousStates)) return;
+    public EventStore setState(State state) {
+        if (state == Iterables.getLast(previousStates)) return this;
         for (var listener : listeners)
             listener.call(Iterables.getLast(previousStates), state);
         previousStates.add(state);
+        return this;
     }
 
     public State currentState() {

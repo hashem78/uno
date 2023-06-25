@@ -14,7 +14,7 @@ public final class SameActionRule extends StateDependantRule {
     @Override
     public boolean apply() {
 
-        return Iterables.getLast(state.playPile().cards()).action().equals(card.action());
+        return state.topOfPlayPile().action().equals(card.action());
     }
 
     @Override
