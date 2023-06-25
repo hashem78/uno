@@ -8,21 +8,15 @@ import java.util.function.Function;
 
 @RecordBuilder
 public record RuleSet(
-        String name,
         List<Rule> rules,
         boolean startWIth,
         Function2 strategy) implements RuleSetBuilder.With, Rule {
 
     public RuleSet() {
-        this("", new ArrayList<>(), true, (p, c) -> p && c.apply());
+        this(new ArrayList<>(), true, (p, c) -> p && c.apply());
     }
-
-    public RuleSet(String name) {
-        this(name, new ArrayList<>(), true, (p, c) -> p && c.apply());
-    }
-
-    public RuleSet(String name, boolean startWIth, Function2 strategy) {
-        this(name, new ArrayList<>(), startWIth, strategy);
+    public RuleSet(boolean startWIth, Function2 strategy) {
+        this(new ArrayList<>(), startWIth, strategy);
     }
 
     public RuleSet add(Rule rule) {
@@ -40,14 +34,6 @@ public record RuleSet(
             result = strategy.apply(result, rule);
         }
 
-        if(result)
-            System.out.println("Move Passed RuleSet: " + name);
-
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 }
