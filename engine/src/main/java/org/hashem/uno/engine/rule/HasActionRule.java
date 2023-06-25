@@ -11,8 +11,7 @@ public final class HasActionRule extends StateInDependantRule {
 
     @Override
     public boolean apply() {
-        return !(card.action() instanceof NoEffectAction) &&
-                !(new NotWildCardRule(card).apply());
+        return !(card.action() instanceof NoEffectAction);
     }
 
     @Override
