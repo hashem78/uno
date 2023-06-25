@@ -1,7 +1,9 @@
-package org.hashem.uno.engine.pipleline;
+package org.hashem.uno.game.steps;
 
 import org.hashem.uno.engine.Color;
 import org.hashem.uno.engine.card.Card;
+import org.hashem.uno.engine.pipleline.Pipeline;
+import org.hashem.uno.engine.pipleline.Step;
 import org.hashem.uno.engine.state.State;
 import org.hashem.uno.engine.structures.Pile;
 

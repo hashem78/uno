@@ -9,6 +9,10 @@ import org.hashem.uno.engine.pipleline.*;
 import org.hashem.uno.engine.render.Renderer;
 import org.hashem.uno.engine.state.State;
 import org.hashem.uno.engine.structures.Deck;
+import org.hashem.uno.game.steps.BuildBankStep;
+import org.hashem.uno.game.steps.BuildDecksStep;
+import org.hashem.uno.game.steps.BuildPlayPileStep;
+import org.hashem.uno.game.steps.PickPlayerCountStep;
 
 import java.util.Scanner;
 
