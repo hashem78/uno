@@ -1,6 +1,7 @@
-package org.hashem.uno.engine.render;
+package org.hashem.uno.game;
 
 import com.google.common.collect.Iterables;
+import org.hashem.uno.engine.render.Renderer;
 import org.hashem.uno.engine.state.State;
 
 public class ConsoleGameRenderer implements Renderer {

@@ -6,7 +6,6 @@ import org.hashem.uno.engine.event.DrawFromBankPileEvent;
 import org.hashem.uno.engine.event.EndGameEvent;
 import org.hashem.uno.engine.event.EventStore;
 import org.hashem.uno.engine.pipleline.*;
-import org.hashem.uno.engine.render.ConsoleGameRenderer;
 import org.hashem.uno.engine.render.Renderer;
 import org.hashem.uno.engine.state.State;
 import org.hashem.uno.engine.structures.Deck;
