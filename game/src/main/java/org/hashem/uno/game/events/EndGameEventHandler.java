@@ -1,10 +1,10 @@
-package org.hashem.uno.game;
+package org.hashem.uno.game.events;
 
-import org.hashem.uno.engine.event.EndGameEvent;
+import org.hashem.uno.game.events.EndGameEvent;
 import org.hashem.uno.engine.event.EventHandler;
 import org.hashem.uno.engine.state.State;
 
-final class EndGameEventHandler implements EventHandler<EndGameEvent> {
+public final class EndGameEventHandler implements EventHandler<EndGameEvent> {
 
     @Override
     public State handle(State state, EndGameEvent event) throws Exception {

@@ -1,10 +1,10 @@
-package org.hashem.uno.game;
+package org.hashem.uno.game.events;
 
 import org.hashem.uno.engine.event.StateListener;
 import org.hashem.uno.engine.render.Renderer;
 import org.hashem.uno.engine.state.State;
 
-final class EventStoreListener implements StateListener<State> {
+public final class EventStoreListener implements StateListener<State> {
     final Renderer renderer;
 
     public EventStoreListener(Renderer renderer) {

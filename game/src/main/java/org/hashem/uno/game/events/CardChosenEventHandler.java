@@ -1,12 +1,12 @@
-package org.hashem.uno.game;
+package org.hashem.uno.game.events;
 
 import org.hashem.uno.engine.action.DefaultActionVisitor;
-import org.hashem.uno.engine.event.CardChosenEvent;
+import org.hashem.uno.game.events.CardChosenEvent;
 import org.hashem.uno.engine.event.EventHandler;
 import org.hashem.uno.engine.rule.*;
 import org.hashem.uno.engine.state.State;
 
-final class CardChosenEventHandler implements EventHandler<CardChosenEvent> {
+public final class CardChosenEventHandler implements EventHandler<CardChosenEvent> {
 
     @Override
     public State handle(State state, CardChosenEvent event) throws Exception {

@@ -1,12 +1,10 @@
-package org.hashem.uno.game;
+package org.hashem.uno.game.events;
 
-import org.hashem.uno.engine.event.DrawFromBankPileEvent;
-import org.hashem.uno.engine.event.EndGameEvent;
+import org.hashem.uno.game.events.DrawFromBankPileEvent;
 import org.hashem.uno.engine.event.EventHandler;
-import org.hashem.uno.engine.event.EventStore;
 import org.hashem.uno.engine.state.State;
 
-final class DrawFromBankPileEventHandler implements EventHandler<DrawFromBankPileEvent> {
+public final class DrawFromBankPileEventHandler implements EventHandler<DrawFromBankPileEvent> {
 
     @Override
     public State handle(State state, DrawFromBankPileEvent event) throws Exception {
@@ -20,7 +18,7 @@ final class DrawFromBankPileEventHandler implements EventHandler<DrawFromBankPil
             var modifiedDecks = temp.first();
             var nextPlayerDeck = temp.second();
             var modifiedNextPlayerDeck = nextPlayerDeck.add(randomCards);
-            modifiedDecks = modifiedDecks.add(state.nextPlayer(), modifiedNextPlayerDeck);
+            modifiedDecks = modifiedDecks.add(state.currentPlayer(), modifiedNextPlayerDeck);
 
             return state
                     .withBankPile(modifiedBankPile)

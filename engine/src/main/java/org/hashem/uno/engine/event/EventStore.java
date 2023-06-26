@@ -2,9 +2,6 @@ package org.hashem.uno.engine.event;
 
 import com.google.common.collect.Iterables;
 import org.hashem.uno.engine.state.State;
-import org.hashem.uno.engine.state.StateBuilder;
-import org.hashem.uno.engine.structures.Decks;
-import org.hashem.uno.engine.structures.Pile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,18 +28,14 @@ public record EventStore(
         return this;
     }
 
-    public <T extends Event> void addEvent(T event) {
+    public <T extends Event> void addEvent(T event) throws Exception {
 
         if (!handlers.containsKey(event.getClass())) return;
         previousEvents.add(event);
         @SuppressWarnings("unchecked") var val = (EventHandler<T>) handlers.get(event.getClass());
-        try {
-            var state = val.handle(Iterables.getLast(previousStates), event);
-            setState(state);
-        } catch (Exception e) {
-            System.out.println(e);
-            addEvent(new EndGameEvent());
-        }
+
+        var state = val.handle(Iterables.getLast(previousStates), event);
+        setState(state);
     }
 
     public EventStore setState(State state) {

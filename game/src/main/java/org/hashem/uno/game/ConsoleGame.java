@@ -1,24 +1,19 @@
 package org.hashem.uno.game;
 
 import org.hashem.uno.engine.Game;
-import org.hashem.uno.engine.event.CardChosenEvent;
-import org.hashem.uno.engine.event.DrawFromBankPileEvent;
-import org.hashem.uno.engine.event.EndGameEvent;
+import org.hashem.uno.game.events.*;
 import org.hashem.uno.engine.event.EventStore;
 import org.hashem.uno.engine.pipleline.*;
 import org.hashem.uno.engine.render.Renderer;
 import org.hashem.uno.engine.state.State;
 import org.hashem.uno.engine.structures.Deck;
-import org.hashem.uno.game.steps.BuildBankStep;
-import org.hashem.uno.game.steps.BuildDecksStep;
-import org.hashem.uno.game.steps.BuildPlayPileStep;
-import org.hashem.uno.game.steps.PickPlayerCountStep;
+import org.hashem.uno.game.steps.*;
 
 import java.util.Scanner;
 
 public class ConsoleGame implements Game {
     @Override
-    public void run() {
+    public void run() throws Exception {
         final Renderer renderer = new ConsoleGameRenderer();
 
         var initialState = new Pipeline<State, State>()
@@ -42,9 +37,14 @@ public class ConsoleGame implements Game {
                 eventStore.addEvent(new EndGameEvent());
                 break;
             }
+
             System.out.println("To draw a random card from the bank pile enter -1");
 
             var cardIndex = scanner.nextInt();
+            if (cardIndex >= currentState.currentPlayerDeck().size()) {
+                System.out.println("Choose a valid card!");
+                continue;
+            }
 
             if (cardIndex == -1) {
                 eventStore.addEvent(new DrawFromBankPileEvent());

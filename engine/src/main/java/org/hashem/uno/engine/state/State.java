@@ -7,6 +7,7 @@ import org.hashem.uno.engine.structures.Decks;
 import org.hashem.uno.engine.structures.Pile;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RecordBuilder
 public record State(
@@ -44,5 +45,9 @@ public record State(
 
     public State withPlayPile(Card card) {
         return this.withPlayPile(playPile.withCard(card));
+    }
+
+    public List<Card> currentPlayerDeck() {
+        return decks.get(currentPlayer).cards();
     }
 }
